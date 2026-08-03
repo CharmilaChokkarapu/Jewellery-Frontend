@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import favoriteReducer from "../features/favoriteSlice";
-import cartReducer from "../features/cartSlice";
+import cartReducer from "../features/Cartslice";
 
 export const store = configureStore({
   reducer: {
