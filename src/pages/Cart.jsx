@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../features/cartSlice";
+import { removeFromCart } from "../features/Cartslice";
 import "./Cart.css";
 
 function Cart() {
