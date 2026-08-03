@@ -8,8 +8,10 @@ function Register() {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
+    role:"customer"
   });
+
 
   function handleChange(e) {
     setUser({
@@ -18,18 +20,52 @@ function Register() {
     });
   }
 
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(user)
+
+    // Get existing users
+    const users = JSON.parse(
+      localStorage.getItem("users")
+    ) || [];
+
+
+    // Check email already exists
+    const existingUser = users.find(
+      (u) => u.email === user.email
     );
+
+
+    if(existingUser){
+      alert("Email already registered");
+      return;
+    }
+
+
+    // New customers will be customer role
+    const newUser = {
+      ...user,
+      role: "customer"
+    };
+
+
+    // Add new user
+    users.push(newUser);
+
+
+    localStorage.setItem(
+      "users",
+      JSON.stringify(users)
+    );
+
 
     alert("Registration Successful");
 
     navigate("/login");
+
   }
+
 
   return (
 
@@ -42,6 +78,7 @@ function Register() {
 
         <h2>Register</h2>
 
+
         <input
           type="text"
           name="name"
@@ -50,6 +87,7 @@ function Register() {
           onChange={handleChange}
           required
         />
+
 
         <input
           type="email"
@@ -60,6 +98,7 @@ function Register() {
           required
         />
 
+
         <input
           type="password"
           name="password"
@@ -69,12 +108,14 @@ function Register() {
           required
         />
 
+
         <button
           type="submit"
           className="submit-btn"
         >
           Register
         </button>
+
 
       </form>
 

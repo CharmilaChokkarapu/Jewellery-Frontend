@@ -1,70 +1,92 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
-function Login() {
+function Login(){
 
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const [email,setEmail]=useState("");
+const [password,setPassword]=useState("");
 
-  function handleLogin(e) {
-    e.preventDefault();
 
-    const user = JSON.parse(localStorage.getItem("user"));
+async function handleLogin(e){
 
-    if (
-      user &&
-      user.email === email &&
-      user.password === password
-    ) {
-      localStorage.setItem("isLoggedIn", "true");
-      alert("Login Successful");
-      navigate("/");
-    } else {
-      alert("Invalid Email or Password");
-    }
-  }
+e.preventDefault();
 
-  return (
+try{
 
-    <div className="login-container">
+const response = await api.get(
+`/users?email=${email}&password=${password}`
+);
 
-      <form
-        className="login-form"
-        onSubmit={handleLogin}
-      >
 
-        <h2>Login</h2>
+if(response.data.length > 0){
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+const loggedUser=response.data[0];
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
 
-        <button
-          type="submit"
-          className="submit-btn"
-        >
-          Login
-        </button>
+localStorage.setItem(
+"user",
+JSON.stringify(loggedUser)
+);
 
-      </form>
 
-    </div>
+alert("Login Successful");
 
-  );
+
+navigate("/");
+
+
+}
+else{
+
+alert("Invalid Email or Password");
+
+}
+
+
+}
+catch(error){
+
+console.log(error);
+
+alert("Unable to Login");
+
+}
+
+}
+
+
+return(
+
+<form onSubmit={handleLogin}>
+
+<input
+type="email"
+placeholder="Email"
+value={email}
+onChange={(e)=>setEmail(e.target.value)}
+/>
+
+
+<input
+type="password"
+placeholder="Password"
+value={password}
+onChange={(e)=>setPassword(e.target.value)}
+/>
+
+
+<button>
+Login
+</button>
+
+
+</form>
+
+);
+
 }
 
 export default Login;
