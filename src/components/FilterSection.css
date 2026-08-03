@@ -1,0 +1,48 @@
+.filter-bar {
+    width: 90%;
+    margin: 25px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.filter-bar select {
+    width: 180px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+}
+
+.filter-bar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #b8860b;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-bar button:hover {
+    background: #8c6a09;
+}
+
+@media (max-width: 768px) {
+    .filter-bar {
+        flex-direction: column;
+    }
+
+    .filter-bar select,
+    .filter-bar button {
+        width: 100%;
+    }
+}
