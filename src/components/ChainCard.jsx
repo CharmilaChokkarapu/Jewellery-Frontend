@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addFavorite } from "../features/favoriteSlice";
-import { addToCart } from "../features/cartSlice";
+import { addToCart } from "../features/Cartslice";
 
 function ChainCard({ chain }) {
   const dispatch = useDispatch();
